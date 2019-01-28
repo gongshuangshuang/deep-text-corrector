@@ -291,14 +291,6 @@ def decode(sess, model, data_reader, data_to_decode, corrective_tokens=set(),
 
         yield outputs
 
-
-def decode_sentence(sess, model, data_reader, sentence, corrective_tokens=set(),
-                    verbose=True):
-    """Used with InteractiveSession in an IPython notebook."""
-    return next(decode(sess, model, data_reader, [sentence.split()],
-                       corrective_tokens=corrective_tokens, verbose=verbose))
-
-
 def evaluate_accuracy(sess, model, data_reader, corrective_tokens, test_path,
                       max_samples=None):
     """Evaluates the accuracy and BLEU score of the given model."""
