@@ -27,7 +27,7 @@
   
  测试命令：
  
- python correct_text.py --test_path ../data/movie_dialog_test.txt --config DefaultMovieDialogConfig --data_reader_type MovieDialogReader --model_path ../data/movie_dialog_model/ --decode
+ python correct_text.py --test_path ../data/movie_dialog_test.txt --config DefaultMovieDialogConfig --data_reader_type MovieDialogReader --model_path ../data/movie_dialog_model/ --train_path ../data/movie_dialog_train.txt --decode
 
 
     
