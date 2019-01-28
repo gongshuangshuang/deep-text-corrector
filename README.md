@@ -20,7 +20,9 @@
   
  4.
  训练命令：
- python correct_text.py --train_path ../data/movie_dialog_train.txt --val_path ../data/movie_dialog_val.txt --config DefaultMovieDialogConfig --data_reader_type MovieDialogReader --model_path ../data/movie_dialog_model/
+ 
+  python correct_text.py --train_path ../data/movie_dialog_train.txt --val_path ../data/movie_dialog_val.txt --config   DefaultMovieDialogConfig --data_reader_type MovieDialogReader --model_path ../data/movie_dialog_model/
+  
  测试命令：
 
 
