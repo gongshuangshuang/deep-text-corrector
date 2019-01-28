@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 
 # -------------数据处理------------
 def data_process():
-    with open('movie_lines.txt', 'rb') as fin, \
+    with open('/data/movie_lines.txt', 'rb') as fin, \
             open('preprocessed_movie_lines.txt', 'w', encoding='utf-8') as fout:
         for lines in fin.readlines():
             line = str(lines).strip().split('+++$+++')[-1].split('\\n')[0].replace('\\', '')
