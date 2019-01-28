@@ -43,8 +43,6 @@ tf.app.flags.DEFINE_boolean("decode", False, "Whether we should decode data "
                                              "model_path.")
 
 FLAGS = tf.app.flags.FLAGS
-
-
 class TestConfig():
     # We use a number of buckets and pad to the closest one for efficiency.
     buckets = [(10, 10), (15, 15), (20, 20), (40, 40)]
@@ -63,27 +61,6 @@ class TestConfig():
 
     use_lstm = False
     use_rms_prop = False
-
-
-class DefaultPTBConfig():
-    buckets = [(10, 10), (15, 15), (20, 20), (40, 40)]
-
-    steps_per_checkpoint = 100
-    max_steps = 20000
-
-    max_vocabulary_size = 10000
-
-    size = 512
-    num_layers = 2
-    max_gradient_norm = 5.0
-    batch_size = 64
-    learning_rate = 0.5
-    learning_rate_decay_factor = 0.99
-
-    use_lstm = False
-    use_rms_prop = False
-
-
 class DefaultMovieDialogConfig():
     buckets = [(10, 10), (15, 15), (20, 20), (40, 40)]
 
@@ -401,8 +378,6 @@ def main(_):
         config = TestConfig()
     elif FLAGS.config == "DefaultMovieDialogConfig":
         config = DefaultMovieDialogConfig()
-    elif FLAGS.config == "DefaultPTBConfig":
-        config = DefaultPTBConfig()
     else:
         raise ValueError("config argument not recognized; must be one of: "
                          "TestConfig, DefaultPTBConfig, "
@@ -411,8 +386,6 @@ def main(_):
     # Determine which kind of DataReader we want to use.
     if FLAGS.data_reader_type == "MovieDialogReader":
         data_reader = MovieDialogReader(config, FLAGS.train_path)
-    elif FLAGS.data_reader_type == "PTBDataReader":
-        data_reader = PTBDataReader(config, FLAGS.train_path)
     else:
         raise ValueError("data_reader_type argument not recognized; must be "
                          "one of: MovieDialogReader, PTBDataReader")
@@ -422,13 +395,9 @@ def main(_):
         with tf.Session() as session:
             model = create_model(session, True, FLAGS.model_path, config=config)
             print("Loaded model. Beginning decoding.")
-            decodings = decode(session, model=model, data_reader=data_reader,
-                               data_to_decode=data_reader.read_tokens(
-                                   FLAGS.test_path), verbose=False)
-            # Write the decoded tokens to stdout.
-            for tokens in decodings:
-                print(" ".join(tokens))
-                sys.stdout.flush()
+            corrective_tokens = get_corrective_tokens(data_reader, test_path)
+            evaluate_accuracy(session, model, data_reader, corrective_tokens, test_path,
+                          max_samples=None)
     else:
         print("Training model.")
         train(data_reader, FLAGS.train_path, FLAGS.val_path, FLAGS.model_path)
