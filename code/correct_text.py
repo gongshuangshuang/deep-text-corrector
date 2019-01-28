@@ -65,7 +65,7 @@ class DefaultMovieDialogConfig():
     buckets = [(10, 10), (15, 15), (20, 20), (40, 40)]
 
     steps_per_checkpoint = 100
-    max_steps = 20000
+    max_steps = 2000
 
     # The OOV resolution scheme used in decode() allows us to use a much smaller
     # vocabulary.
