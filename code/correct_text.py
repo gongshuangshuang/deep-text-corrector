@@ -387,8 +387,8 @@ def main(_):
         with tf.Session() as session:
             model = create_model(session, True, FLAGS.model_path, config=config)
             print("Loaded model. Beginning decoding.")
-            corrective_tokens = get_corrective_tokens(data_reader, test_path)
-            evaluate_accuracy(session, model, data_reader, corrective_tokens, test_path,
+            corrective_tokens = get_corrective_tokens(data_reader, FLAGS.test_path)
+            evaluate_accuracy(session, model, data_reader, corrective_tokens, FLAGS.test_path,
                           max_samples=None)
     else:
         print("Training model.")
