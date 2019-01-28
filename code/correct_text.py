@@ -25,7 +25,7 @@ import numpy as np
 import tensorflow as tf
 
 from data_reader import EOS_ID
-from text_corrector_data_readers import MovieDialogReader, PTBDataReader
+from text_corrector_data_readers import MovieDialogReader
 
 from text_corrector_models import TextCorrectorModel
 
